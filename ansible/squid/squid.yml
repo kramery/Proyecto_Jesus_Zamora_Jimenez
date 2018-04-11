@@ -1,0 +1,6 @@
+---
+- hosts: squid
+  sudo: yes
+  tasks:
+    - name: install squid
+      apt: name=squid3 state=latest
