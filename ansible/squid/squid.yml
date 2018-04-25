@@ -6,6 +6,6 @@
       apt: name=squid3 state=latest
       
     - name: "Configuración de squid"
-      template: src=template/squid.conf dest=/etc/squid/squid.conf owner=root mode=0640 backup=yes
+      template: src=template/squid.conf dest=/etc/squid3/ owner=root mode=0640 backup=yes
       notify:
        - restart squid
