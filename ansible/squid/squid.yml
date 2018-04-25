@@ -4,3 +4,8 @@
   tasks:
     - name: install squid
       apt: name=squid3 state=latest
+      
+    - name: "Configuración de squid"
+      template: src=squid.conf dest=/etc/squid/squid.conf owner=root mode=0640 backup=yes
+      notify:
+       - restart squid
