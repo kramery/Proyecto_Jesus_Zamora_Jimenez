@@ -1,0 +1,75 @@
+---
+- hosts: respaldo
+  sudo: yes
+  tasks:
+
+    - name: Actualizar paquetes
+      apt: update_cache=yes
+
+
+###########################################   S Q U I D    ##############################################################
+
+
+    - name: Instalar Squid
+      apt: name=squid3 state=latest  
+
+    - name: Configurar squid.conf
+      template: src=template/squid.conf dest=/etc/squid3/ owner=root mode=0640 backup=yes
+
+    - name: Configurar squid.conf
+      template: src=template/nowebs dest=/etc/squid3/ owner=root mode=0640 backup=yes
+
+    - name: Reiniciar el servicio Squid
+      service: name=squid3 state=restarted
+
+
+###########################################   D A N S G U A R D I A N    ################################################
+
+
+    - name: Instalar Dansguardian
+      apt: name=dansguardian state=latest
+
+    - name: Configurar Dansguardian
+      template: src=template/dansguardian.conf dest=/etc/dansguardian/ owner=root mode=0640 backup=yes
+
+    - name: Configurar Dansguardian
+      template: src=template/bannedsitelist dest=/etc/dansguardian/lists/ owner=root mode=0640 backup=yes
+
+    - name: Reiniciar el servicio Dansguardian
+      service: name=dansguardian state=restarted
+
+
+###########################################   W E B M I N    ############################################################
+
+
+    - name: Lista de paquetes a instalar de Webmin
+      apt: name={{item}} state=installed
+      with_items:
+        - perl
+        - libnet-ssleay-perl
+        - openssl
+        - libauthen-pam-perl
+        - libpam-runtime
+        - libio-pty-perl
+        - apt-show-versions
+        - python
+
+    - name: Descargar el paquete Webmin
+      get_url:
+        url: http://prdownloads.sourceforge.net/webadmin/webmin_1.881_all.deb
+        dest: /home
+        mode: 0440
+
+
+    - name: Instalando Webmin
+      shell: dpkg --install /home/webmin_1.881_all.deb
+
+
+
+
+
+
+
+
+
+
