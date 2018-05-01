@@ -4,8 +4,6 @@
   tasks:
     - name: install squid
       apt: name=squid3 state=latest
-      
-    - name: "Configuración de squid"
-      template: src=template/squid.conf dest=/etc/squid3/ owner=root mode=0640 backup=yes
-      notify:
-       - restart squid
+      template: src=template/squid.conf dest=/etc/squid3/ owner=root mode=0640 backup=yes 
+    - name: "Reinicia el proxy Squid"
+      service: name=squid3 state=restarted
