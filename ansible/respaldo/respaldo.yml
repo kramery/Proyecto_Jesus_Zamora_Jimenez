@@ -7,7 +7,7 @@
       apt: update_cache=yes
 
 
-###########################################   S Q U I D    ##############################################################
+###########################################   S Q U I D
 
 
     - name: Instalar Squid
@@ -23,7 +23,7 @@
       service: name=squid3 state=restarted
 
 
-###########################################   D A N S G U A R D I A N    ################################################
+###########################################   D A N S G U A R D I A N    
 
 
     - name: Instalar Dansguardian
@@ -39,7 +39,7 @@
       service: name=dansguardian state=restarted
 
 
-###########################################   W E B M I N    ############################################################
+###########################################   W E B M I N    
 
 
     - name: Lista de paquetes a instalar de Webmin
@@ -55,10 +55,7 @@
         - python
 
     - name: Descargar el paquete Webmin
-      get_url:
-        url: http://prdownloads.sourceforge.net/webadmin/webmin_1.881_all.deb
-        dest: /home
-        mode: 0440
+      copy: src=archive/webmin_1.881_all.deb dest=/home/ owner=root mode=0640 backup=yes
 
 
     - name: Instalando Webmin
@@ -66,7 +63,14 @@
 
 
 
+###########################################   Z A B I X X   
 
+
+    - name: Instalar paquetes necesarios Zabixx
+      apt: name={{item}} state=installed
+      with_items:
+        - apache2
+        - mysql-server
 
 
 
