@@ -57,13 +57,15 @@
     - name: Descargar el paquete Webmin
       copy: src=archive/webmin_1.881_all.deb dest=/home/ owner=root mode=0640 backup=yes
 
-
     - name: Instalando Webmin
       shell: dpkg --install /home/webmin_1.881_all.deb
+      
+    - name: Reiniciar Webmin
+      service: name=webmin state=restarted
+      
 
 
-
-###########################################   Z A B I X X   
+###########################################   Z A B B I X   
 
 
     - name: Instalar paquetes necesarios Zabixx
@@ -74,6 +76,16 @@
 
 
 
+###########################################   F A I L 2 B A N   
 
+
+     - name: Instalar Fai2ban
+       apt: pkg=fail2ban state=latest
+
+     - name: Configurar Fail2ban
+       template: src=template/jail.conf dest=/etc/fail2ban/ owner=root mode=0640 backup=yes     
+
+     - name: Reinciar servicio Fail2ban
+       service: name=fail2ban state=started enabled=yes
 
 
