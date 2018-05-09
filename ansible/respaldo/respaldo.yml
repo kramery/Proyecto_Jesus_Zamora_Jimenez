@@ -68,7 +68,7 @@
 ###########################################   Z A B B I X   
 
 
-    - name: Instalar paquetes necesarios Zabixx
+    - name: Instalar paquetes necesarios Zabbix
       apt: name={{item}} state=installed
       with_items:
         - apache2
@@ -79,13 +79,24 @@
 ###########################################   F A I L 2 B A N   
 
 
-     - name: Instalar Fai2ban
-       apt: pkg=fail2ban state=latest
+    - name: Instalar Fai2ban
+      apt: pkg=fail2ban state=latest
 
-     - name: Configurar Fail2ban
-       template: src=template/jail.conf dest=/etc/fail2ban/ owner=root mode=0640 backup=yes     
+    - name: Configurar Fail2ban
+      template: src=template/jail.conf dest=/etc/fail2ban/ owner=root mode=0640 backup=yes     
 
-     - name: Reinciar servicio Fail2ban
-       service: name=fail2ban state=started enabled=yes
+    - name: Reinciar servicio Fail2ban
+      service: name=fail2ban state=started enabled=yes
 
 
+##########################################  S A R G
+
+
+    - name: Instalar Sarg
+      apt: name=sarg state=latest
+
+    - name: Configurar Sarg
+      template: src=template/sarg.conf dest=/etc/sarg/ owner=root mode=0640 backup=yes
+
+    - name: Iniciando Sarg
+      shell: sarg -x
