@@ -53,6 +53,7 @@
         - libio-pty-perl
         - apt-show-versions
         - python
+        - apache2
 
     - name: Descargar el paquete Webmin
       copy: src=archive/webmin_1.881_all.deb dest=/home/ owner=root mode=0640 backup=yes
@@ -117,7 +118,8 @@
     - name: Configurando Iptables al inicio de cada encendido
       shell: update-rc.d iptables.sh defaults 99
 
-
+    - name: Dar permisos para la ejecución al inicio
+      shell: chmod +x /etc/init.d/iptables.sh
 
 
 
