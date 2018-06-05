@@ -18,7 +18,10 @@
 
     - name: Configurar squid.conf
       template: src=template/nowebs dest=/etc/squid3/ owner=root mode=0640 backup=yes
-
+      
+    - name: Copiar listas negras para Squid
+      template: src=template/easylist.txt dest=/etc/squid3/ owner=root mode=0640 backup=yes
+      
     - name: Reiniciar el servicio Squid
       service: name=squid3 state=restarted
 
@@ -92,11 +95,6 @@
 
     - name: Reiniciando el programado de los informes
       service: name=cron state=restarted enabled=yes
-
-
-##########################################  E A S Y  L I S T
-
-
 
 
 ##########################################  R E D 
