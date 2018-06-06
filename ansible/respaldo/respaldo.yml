@@ -110,15 +110,22 @@
 ##########################################  I P T A B L E S 
 
 
-    - name: Copiando Iptables al servidor
+    - name: Copiar Iptables
       template: src=template/iptables.sh dest=/etc/init.d/ owner=root mode=0640 backup=yes
-
-    - name: Configurando Iptables al inicio de cada encendido
-      shell: update-rc.d iptables.sh defaults 99
 
     - name: Dar permisos para la ejecución al inicio
       shell: chmod +x /etc/init.d/iptables.sh
+      
+    - name: Configurando Iptables al inicio de cada encendido
+      shell: update-rc.d iptables.sh defaults 99
+      
+
+##########################################  S S H 
 
 
-
+    - name: Copiar configuración servidor SSH
+      template: src=template/sshd_config dest=/etc/ssh/ owner=root mode=0640 backup=yes
+      
+    - name: Reinciar servicio 
+      service: name=ssh state=restarted enabled=yes
 
