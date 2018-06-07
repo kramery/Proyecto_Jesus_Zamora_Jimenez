@@ -90,21 +90,11 @@
     - name: Configurar Sarg
       template: src=template/sarg.conf dest=/etc/sarg/ owner=root mode=0640 backup=yes
 
-    - name: Programando informes diarios a las 19h
-      template: src=template/crontab dest=/etc/ owner=root mode=0640 backup=yes
+    - name: Programado de los informes
+      shell: echo "00 19   * * 0   root    sarg -x" >> /etc/crontab
 
     - name: Reiniciando el programado de los informes
       service: name=cron state=restarted enabled=yes
-
-
-##########################################  R E D 
-
-
-    - name: Configurar la red del servidor
-      template: src=template/interfaces dest=/etc/network/ owner=root mode=0640 backup=yes
-
-    - name: Reinciar servicio de red
-      service: name=networking state=restarted enabled=yes
 
 
 ##########################################  I P T A B L E S 
@@ -119,6 +109,16 @@
     - name: Configurando Iptables al inicio de cada encendido
       shell: update-rc.d iptables.sh defaults 99
       
+      
+##########################################  R E D 
+
+
+    - name: Configurar la red del servidor
+      template: src=template/interfaces dest=/etc/network/ owner=root mode=0640 backup=yes
+
+    - name: Reinciar servicio de red
+      service: name=networking state=restarted enabled=yes
+
 
 ##########################################  S S H 
 
