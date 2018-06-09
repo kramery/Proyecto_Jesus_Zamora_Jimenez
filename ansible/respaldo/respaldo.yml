@@ -25,11 +25,13 @@
     - name: Reiniciar el servicio Squid
       service: name=squid3 state=restarted
       
+    - name: Borrar lista negra antigua
+      shell: echo "00 8   * * 6   root    rm -f /home/jesus/easylist.txt" >> /etc/crontab      
+      
     - name: Descargar lista negra
       shell: echo "00 8   * * 6   root    wget https://easylist.to/easylist/easylist.txt" >> /etc/crontab
       
-    - name: Borrar lista negra antigua
-      shell: echo "00 8   * * 6   root    rm -f /home/jesus/easylist.txt" >> /etc/crontab
+
 
 
 ###########################################   D A N S G U A R D I A N    
