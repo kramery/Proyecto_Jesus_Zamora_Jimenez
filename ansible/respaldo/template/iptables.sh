@@ -79,16 +79,17 @@ iptables -A INPUT -p tcp --dport 8080 -j ACCEPT
 iptables -A OUTPUT -p tcp --sport 8080 -j ACCEPT
 
 
-#iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 3128 -j REDIRECT --to-port                                                                                         8080
+#iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 3128 -j REDIRECT --to-port 8080
 
 
 
 
-#Permitir que la red 191.168.11.0/24 tenga salida al exterior por el interfaz et                                                                                        h0
+#Permitir que las redes Aula y DMZ tengan salida al exterior por el interfaz eth0
 iptables -t nat -A POSTROUTING -o eth0 -s 192.168.11.0/24 -j MASQUERADE
+iptables -t nat -A POSTROUTING -o eth0 -s 192.168.12.0/24 -j MASQUERADE
 
 
-#Aunque ya está prohibido por defecto, se prohibe que ninguna otra conexión web                                                                                         sea posible a menos que se use proxy
+#Aunque ya está prohibido por defecto, se prohibe que ninguna otra conexión web sea posible a menos que se use proxy
 #iptables -A FORWARD -s 192.168.11.0/24 -i eth1 -p tcp --dport 80 -j DROP
 #iptables -A FORWARD -s 192.168.11.0/24 -i eth1 -p tcp --dport 443 -j DROP
 
@@ -99,8 +100,8 @@ iptables -t nat -A POSTROUTING -o eth0 -s 192.168.11.0/24 -j MASQUERADE
 
 
 #Redireccionar los puertos 80 y 443 para Dansguardian (http y https)
-#iptables -t nat -A PREROUTING -s 192.168.11.0/24 -p tcp --dport 80 -j REDIRECT                                                                                         --to-port 8080
-#iptables -t nat -A PREROUTING -s 192.168.11.0/24 -p tcp --dport 443 -j REDIRECT                                                                                         --to-port 8080
+#iptables -t nat -A PREROUTING -s 192.168.11.0/24 -p tcp --dport 80 -j REDIRECT --to-port 8080
+#iptables -t nat -A PREROUTING -s 192.168.11.0/24 -p tcp --dport 443 -j REDIRECT --to-port 8080
 
 
 
