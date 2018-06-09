@@ -60,11 +60,11 @@ iptables -A FORWARD -p udp --sport 53  -j ACCEPT
 ###########HTTP & HTTPS
 
 
-iptables -A INPUT -p tcp --dport 80 -i eth0 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 80 -o eth0 -j ACCEPT
+iptables -A INPUT -p tcp --sport 80 -i eth0 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 80 -o eth0 -j ACCEPT
 
-iptables -A INPUT -p tcp --dport 443 -i eth0 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 443 -o eth0 -j  ACCEPT
+iptables -A INPUT -p tcp --sport 443 -i eth0 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 443 -o eth0 -j  ACCEPT
 
 iptables -A  OUTPUT -p tcp --sport 10000 -o eth0 -j  ACCEPT
 iptables -A INPUT -p tcp --dport 10000 -i eth0 -j ACCEPT
