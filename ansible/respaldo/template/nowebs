@@ -8,4 +8,6 @@ www.youtube.com
 http://youtube.com
 https://youtube.com
 192.168.1.18/squid-reports
-192.168.1.1
+https://192.168.1.18/squid-reports
+192.168.1.18
+https://192.168.1.18:10000
